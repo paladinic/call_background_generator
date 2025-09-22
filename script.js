@@ -186,7 +186,7 @@ resetBtn.addEventListener('click', async () => {
   radios.forEach(r => r.checked = false);
   baseImgSrc = null;
   baseImg = null;
-  colorInput.value = '#ff0000';
+  colorInput.value = '#21caab';
   overlayColor = colorInput.value;
   paddingInput.value = '24';
   logoPaddingPx = 24;
