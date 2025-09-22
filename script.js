@@ -12,6 +12,10 @@ const statusEl = document.getElementById('status');
 const logoFileNameEl = document.getElementById('logoFileName');
 const thumbCards = Array.from(document.querySelectorAll('#thumbs label.card'));
 
+// --- Fixed output size: 720p ---
+const OUT_W = 1280; // width
+const OUT_H = 720;  // height
+
 // State
 let baseImgSrc = null;
 let baseImg = null;
@@ -62,6 +66,10 @@ function updateThumbHighlight() {
 }
 
 async function draw() {
+  // Always keep the canvas at 720p, even before image selection
+  canvas.width = OUT_W;
+  canvas.height = OUT_H;
+
   if (!baseImg) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     statusEl.textContent = 'Pick a base image to start.';
@@ -69,25 +77,30 @@ async function draw() {
     return;
   }
 
-  // Match canvas pixels to the base image for crisp output & correct aspect
-  canvas.width = baseImg.naturalWidth;
-  canvas.height = baseImg.naturalHeight;
+  // --- Draw base image as "cover" into 1280x720 (crop, no stretch) ---
+  const iw = baseImg.naturalWidth;
+  const ih = baseImg.naturalHeight;
+  const scale = Math.max(OUT_W / iw, OUT_H / ih); // cover
+  const sw = Math.round(iw * scale);
+  const sh = Math.round(ih * scale);
+  const sx = Math.round((OUT_W - sw) / 2);
+  const sy = Math.round((OUT_H - sh) / 2);
 
-  // Draw base
-  ctx.drawImage(baseImg, 0, 0);
+  ctx.clearRect(0, 0, OUT_W, OUT_H);
+  ctx.drawImage(baseImg, sx, sy, sw, sh);
 
   // Overlay color with alpha 0.5
   ctx.fillStyle = hexToRGBA(overlayColor, 0.5);
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, OUT_W, OUT_H);
 
-  // Draw logo at top-right with padding (px), scaling to ~20% of canvas width
+  // Draw logo at top-right with padding (px), scaling to ~20% of width
   if (logoImg) {
     const padding = logoPaddingPx; // px
-    const maxLogoWidth = Math.round(canvas.width * 0.2);
-    const scale = Math.min(maxLogoWidth / logoImg.naturalWidth, 1);
-    const w = Math.round(logoImg.naturalWidth * scale);
-    const h = Math.round(logoImg.naturalHeight * scale);
-    const x = canvas.width - w - padding;
+    const maxLogoWidth = Math.round(OUT_W * 0.2);
+    const scaleLogo = Math.min(maxLogoWidth / logoImg.naturalWidth, 1);
+    const w = Math.round(logoImg.naturalWidth * scaleLogo);
+    const h = Math.round(logoImg.naturalHeight * scaleLogo);
+    const x = OUT_W - w - padding;
     const y = padding;
     ctx.drawImage(logoImg, x, y, w, h);
   }
@@ -159,7 +172,7 @@ clearLogoBtn.addEventListener('click', async () => {
 downloadBtn.addEventListener('click', () => {
   try {
     const a = document.createElement('a');
-    a.download = 'composed.png';
+    a.download = 'composed-1280x720.png';
     a.href = canvas.toDataURL('image/png');
     a.click();
   } catch (err) {
