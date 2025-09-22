@@ -1,6 +1,7 @@
 # Branded Background Generator
 
-Create branded backgrounds for Zoom, Microsoft Teams, and Google Meet.
+Create branded backgrounds for Zoom, Microsoft Teams, and Google Meet. 
+[Live demo](https://paladinic.github.io/call_background_generator/)
 
 ## Steps
 1. Pick one of the four base photos.
