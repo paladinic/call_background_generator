@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Image + Color + Logo Composer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
+
+    <!-- Bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+
+    <!-- Minimal Neumorphism styles -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="section">
+    <div class="container">
+        <header class="mb-5">
+            <h1 class="title is-3 has-text-black is-flex is-align-items-center">
+                <img src="./img/logo.png" alt="" class="app-logo" aria-hidden="true">
+                <span>Branded Background Generator</span>
+                <span class="tag is-success is-light ml-3">free</span>
+            </h1>
+        </header>
+
+
+        <!-- Step 1: pick a base image -->
+        <div class="box neo">
+            <h2 class="subtitle">1) Pick a picture</h2>
+            <div id="thumbs" class="columns is-multiline">
+                <!-- Thumbnails are labels for radios so clicking the image selects it -->
+                <div class="column is-one-quarter">
+                    <label class="card neo" style="cursor:pointer;">
+                        <input class="is-hidden" type="radio" name="baseImg" value="img/img1.png">
+                        <div class="card-image">
+                            <figure class="image"><img src="img/img1.png" alt="img1"></figure>
+                        </div>
+                    </label>
+                </div>
+                <div class="column is-one-quarter">
+                    <label class="card neo" style="cursor:pointer;">
+                        <input class="is-hidden" type="radio" name="baseImg" value="img/img2.png">
+                        <div class="card-image">
+                            <figure class="image"><img src="img/img2.png" alt="img2"></figure>
+                        </div>
+                    </label>
+                </div>
+                <div class="column is-one-quarter">
+                    <label class="card neo" style="cursor:pointer;">
+                        <input class="is-hidden" type="radio" name="baseImg" value="img/img3.png">
+                        <div class="card-image">
+                            <figure class="image"><img src="img/img3.png" alt="img3"></figure>
+                        </div>
+                    </label>
+                </div>
+                <div class="column is-one-quarter">
+                    <label class="card neo" style="cursor:pointer;">
+                        <input class="is-hidden" type="radio" name="baseImg" value="img/img4.png">
+                        <div class="card-image">
+                            <figure class="image"><img src="img/img4.png" alt="img4"></figure>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls row: color, padding, logo (side by side under big image) -->
+        <div class="box neo">
+            <h2 class="subtitle">2) Controls</h2>
+            <div class="columns is-multiline">
+                <div class="column is-one-third">
+                    <label class="label has-text-grey">Overlay color</label>
+                    <div class="control">
+                        <input id="color" class="input" type="color" value="#ff0000" title="Overlay color">
+                    </div>
+                    <p class="help">Alpha fixed at 0.5</p>
+                </div>
+
+                <div class="column is-one-third">
+                    <label class="label has-text-grey">Logo padding (px)</label>
+                    <div class="control">
+                        <input id="paddingInput" class="input" type="number" min="0" step="1" value="100">
+                    </div>
+                    <p class="help">Distance from top/right edges.</p>
+                </div>
+
+                <div class="column is-one-third">
+                    <label class="label has-text-grey">Logo (PNG/JPG/SVG*)</label>
+
+                    <div class="field is-grouped">
+                        <div class="control is-expanded">
+                            <div class="has-name is-fullwidth">
+                                <label class="file-label" style="width:100%;">
+                                    <input id="logoInput" class="file-input" type="file" accept="image/*">
+                                    <span class="file-cta" style="min-width: 150px; justify-content:center;">
+                                        <span class="">Choose logo…</span>
+                                    </span>
+                                    <span id="logoFileName" class="file-name">No file selected</span>
+                                </label>
+                            </div>
+                            <div class="control">
+                                <button id="clearLogo" class="button is-light">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="help">*SVG with external refs can taint canvas.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Preview  -->
+        <div class="box neo">
+            <h2 class="subtitle">3) Preview</h2>
+            <div class="columns is-vcentered">
+                <div class="column is-full">
+                    <!-- Keep natural aspect ratio (no Bulma ratio classes) -->
+                    <canvas id="canvas" class="neo-inset"></canvas>
+                </div>
+            </div>
+
+
+
+            <div class="buttons">
+                <button id="downloadBtn" class="button is-primary" disabled>Download PNG</button>
+                <button id="resetBtn" class="button is-light">Reset</button>
+            </div>
+            <p id="status" class="help"></p>
+        </div>
+    </div>
+
+    <footer aria-label="Image credits">
+        <div class="p-5">
+            <div class="is-small has-text-centered">
+
+                <p class="has-text-grey mb-1">
+                    Photos by
+                    <a href="https://unsplash.com/@srosinger3997?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                        target="_blank" rel="noopener noreferrer">Samantha Gades</a>,
+                    <a href="https://unsplash.com/@vmokry?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                        target="_blank" rel="noopener noreferrer">Vladimir Mokry</a>,
+                    <a href="https://unsplash.com/@cowomen?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                        target="_blank" rel="noopener noreferrer">CoWomen</a>, and
+                    <a href="https://unsplash.com/@eskandthewood?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                        target="_blank" rel="noopener noreferrer">Silvio Kundt</a>
+                    on
+                    <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>
+                </p>
+
+                <p class="has-text-grey mt-2">
+                    Code by <a href="https://www.linkedin.com/in/paladinic/">Claudio</a>
+                </p>
+
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+:root {
+    --neo-bg: #eee8e8;
+    --neo-light: #ffffff;
+    --neo-dark: #a3b1c6;
+    --neo-radius: 16px;
+}
+
+body {
+    background: var(--neo-bg);
+}
+
+.app-logo {
+    height: 1.6em;
+    /* scales with the title size */
+    width: auto;
+    /* preserves aspect ratio */
+    margin-right: .6rem;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+
+
+.neo {
+    border-radius: 1rem;
+    background: linear-gradient(145deg, #f0f0f0, #cacaca);
+    box-shadow: 20px 20px 60px #bebebe,
+        -20px -20px 60px #ffffff;
+}
+
+.neo-inset {
+    box-shadow: inset 6px 6px 12px var(--neo-dark),
+        inset -6px -6px 12px var(--neo-light);
+}
+
+/* Canvas scales responsively without changing aspect ratio */
+#canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+/* Make Bulma boxes adopt neo style when .neo is added */
+.box.neo {
+    background: var(--neo-bg);
+}
+
+/* Subtle neo for cards (thumbnails) */
+.card.neo {
+    background: var(--neo-bg);
+    border-radius: 14px;
+    box-shadow: 6px 6px 12px var(--neo-dark), -6px -6px 12px var(--neo-light);
+}
+
+/* Neo treatment for Bulma file control */
+.file .file-cta,
+.file .file-name {
+    background: var(--neo-bg);
+    border: none;
+    border-radius: var(--neo-radius);
+    box-shadow: 6px 6px 12px var(--neo-dark), -6px -6px 12px var(--neo-light);
+}
+
+.file .file-cta:hover,
+.file .file-name:hover {
+    box-shadow: 4px 4px 8px var(--neo-dark), -4px -4px 8px var(--neo-light);
+}
+
+.file.is-fullwidth .file-name {
+    width: 100%;
+}
+
+/* Highlight picked thumbnail (neo + subtle outline) */
+#thumbs .card.neo {
+    position: relative;
+    transition: transform .05s ease-in-out;
+}
+
+#thumbs .card.neo.is-active {
+    box-shadow: inset 6px 6px 12px var(--neo-dark),
+        inset -6px -6px 12px var(--neo-light),
+        0 0 0 3px rgba(72, 95, 199, 0.35);
+    transform: translateY(-1px);
+}
+
+#thumbs .card.neo.is-active::after {
+    content: "✓";
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-weight: 700;
+    color: #21caab;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+    font-size: 2rem;
+    /* Bulma success */
+}
