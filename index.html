@@ -62,6 +62,36 @@
                         </div>
                     </label>
                 </div>
+                <div class="column is-one-quarter">
+                    <label class="card neo" style="cursor:pointer;">
+                        <!-- when checked, we use the uploaded image -->
+                        <input class="is-hidden" type="radio" name="baseImg" value="__uploaded__" id="bgUploadRadio">
+
+                        <div class="card-image">
+                            <figure class="image">
+                                <!-- preview shown after user picks a file -->
+                                <img id="bgUploadPreview" alt="Uploaded background preview" style="display:none;">
+                            </figure>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="has-name is-fullwidth" style="width:100%;">
+
+                                <label class="label has-text-grey">Use your background</label>
+                                <label class="file-label" style="width:100%;">
+                                    <input id="bgInput" class="file-input" type="file" accept="image/*">
+                                    <span class="file-cta" style="min-width:150px; justify-content:center;">
+                                        <span class="file-label">Choose image…</span>
+                                    </span>
+                                    <span id="bgFileName" class="file-name">No file selected</span>
+                                </label>
+                            </div>
+                            <p class="help"><a href="https://unsplash.com/" target="_blank">Unsplash</a> has many free
+                                images</p>
+                        </div>
+                    </label>
+                </div>
+
             </div>
         </div>
 
@@ -69,7 +99,7 @@
         <div class="box neo">
             <h2 class="subtitle">2) Controls</h2>
             <div class="columns is-multiline">
-                <div class="column is-one-third">
+                <div class="column is-one-fourth">
                     <label class="label has-text-grey">Overlay color</label>
                     <div class="control">
                         <input id="color" class="input" type="color" value="#21caab" title="Overlay color">
@@ -77,15 +107,17 @@
                     <p class="help">Alpha fixed at 0.5</p>
                 </div>
 
-                <div class="column is-one-third">
+                <div class="column is-one-fourth">
                     <label class="label has-text-grey">Logo padding (px)</label>
-                    <div class="control">
-                        <input id="paddingInput" class="input" type="number" min="0" step="1" value="24">
+                    <div class="control is-flex is-align-items-center">
+                        <input id="paddingInput" class="is-fullwidth" type="range" min="1" step="1" max="300" value="24"
+                            style="width:100%;">
+                        <span id="paddingValue" class="tag is-light ml-3">24px</span>
                     </div>
                     <p class="help">Distance from top/right edges.</p>
                 </div>
 
-                <div class="column is-one-third">
+                <div class="column is-one-fourth">
                     <label class="label has-text-grey">Logo (PNG/JPG/SVG*)</label>
 
                     <div class="field is-grouped">
@@ -98,15 +130,46 @@
                                     </span>
                                     <span id="logoFileName" class="file-name">No file selected</span>
                                 </label>
+                                <p class="help"><a href="https://uxwing.com/" target="_blank">UXwing</a> has many free
+                                    icons</p>
                             </div>
-                            <div class="control">
+                            <div class="control py-1">
                                 <button id="clearLogo" class="button is-light">Clear</button>
                             </div>
                         </div>
                     </div>
 
-                    <p class="help">*SVG with external refs can taint canvas.</p>
                 </div>
+
+                <div class="column is-one-fourth">
+                    <label class="label has-text-grey">Logo size</label>
+                    <div class="control is-flex is-align-items-center">
+                        <input id="logoSize" class="is-fullwidth" type="range" min="5" max="40" step="1" value="20"
+                            style="width:100%;">
+                        <span id="logoSizeValue" class="tag is-light ml-3">20%</span>
+                    </div>
+                    <p class="help">Logo width as % of output width (no stretching).</p>
+                </div>
+
+                <div class="column is-full">
+                    <label class="label has-text-grey">Output ratio</label>
+                    <div class="control">
+                        <label class="radio mr-4">
+                            <input type="radio" name="ratio" value="1:1"> 1:1 (Square)
+                        </label>
+                        <label class="radio mr-4">
+                            <input type="radio" name="ratio" value="4:3"> 4:3
+                        </label>
+                        <label class="radio mr-4">
+                            <input type="radio" name="ratio" value="16:9" checked> 16:9 (Widescreen)
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="ratio" value="21:9"> 21:9 (Ultra-wide)
+                        </label>
+                    </div>
+                    <p class="help">Height fixed at 720px; image is cropped to fill.</p>
+                </div>
+
 
             </div>
         </div>
@@ -157,7 +220,9 @@
         </div>
     </footer>
 
-
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="paladinic" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5"
+        data-position="Right" data-x_margin="18" data-y_margin="18"></script>
     <script src="./script.js"></script>
 </body>
 
