@@ -17,3 +17,9 @@ Create branded backgrounds for Zoom, Microsoft Teams, and Google Meet.
 
 ## Open Source
 This project is open source. Use, modify, and share as you like.
+
+## Special Thanks
+- [bulma.io](http://bulma.io/)
+- [neumorphism.io](https://neumorphism.io/)
+- [unsplash.com](https://unsplash.com/)
+- [uxwing.com](https://uxwing.com/)
